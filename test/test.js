@@ -33,7 +33,7 @@ describe(
 		it(
 			'should render file names properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				var out = logger.renderFileNames('foo.js');
 
@@ -63,7 +63,7 @@ describe(
 		it(
 			'should render TPL properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -78,7 +78,7 @@ describe(
 		it(
 			'should render TPL_PATH properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -117,7 +117,7 @@ describe(
 		it(
 			'should log errors properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -129,7 +129,7 @@ describe(
 		it(
 			'should get logged errors properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -159,7 +159,7 @@ describe(
 		it(
 			'should render helpers properly',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -229,7 +229,7 @@ describe(
 		it(
 			'should sort errors',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(3, 'Has error', 'foo.js');
 				logger.log([1, 5], 'Has error', 'foo.js');
@@ -247,7 +247,7 @@ describe(
 		it(
 			'should not add duplicate errors',
 			function() {
-				var logger = new Logger.constructor();
+				var logger = new Logger();
 
 				logger.log(3, 'Has error', 'foo.js');
 				logger.log(3, 'Has error', 'foo.js');
@@ -262,7 +262,7 @@ describe(
 			'should throw an error when called without arguments',
 			function() {
 				assert.throws(
-					Logger.constructor.create,
+					Logger.create,
 					'You must pass an object to Logger.create'
 				);
 			}
@@ -273,7 +273,7 @@ describe(
 			function() {
 				var constructor = sandbox.spy();
 
-				var FooCustom1 = Logger.constructor.create(
+				var FooCustom1 = Logger.create(
 					{
 						constructor: constructor
 					}
@@ -290,7 +290,7 @@ describe(
 			function() {
 				var constructor = sandbox.spy();
 
-				var FooCustom1 = Logger.constructor.create(
+				var FooCustom1 = Logger.create(
 					{
 						constructor: constructor
 					}
@@ -307,7 +307,7 @@ describe(
 			function() {
 				var init = sandbox.spy();
 
-				var loggerExt = Logger.constructor.create(
+				var loggerExt = Logger.create(
 					{
 						prototype: {
 							init: init

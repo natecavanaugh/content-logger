@@ -327,4 +327,4 @@ Handlebars.registerHelper(
 	}
 );
 
-module.exports = new Logger();
+module.exports = Logger;
