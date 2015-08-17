@@ -54,7 +54,7 @@ var Logger = function() {
 Logger.prototype = _.create(
 	EventEmitter.prototype,
 	{
-		Logger: Logger,
+		constructor: Logger,
 
 		getErrors: function(file) {
 			var fileErrors;

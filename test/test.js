@@ -33,7 +33,7 @@ describe(
 		it(
 			'should render file names properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				var out = logger.renderFileNames('foo.js');
 
@@ -63,7 +63,7 @@ describe(
 		it(
 			'should render TPL properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -78,7 +78,7 @@ describe(
 		it(
 			'should render TPL_PATH properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -117,7 +117,7 @@ describe(
 		it(
 			'should log errors properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -129,7 +129,7 @@ describe(
 		it(
 			'should get logged errors properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -162,11 +162,11 @@ describe(
 				var init = sandbox.spy();
 
 				var loggerExt = function() {
-					Logger.Logger.apply(this, arguments);
+					Logger.constructor.apply(this, arguments);
 				};
 
 				loggerExt.prototype = _.create(
-					Logger.Logger.prototype,
+					Logger.constructor.prototype,
 					{
 						init: init
 					}
@@ -181,7 +181,7 @@ describe(
 		it(
 			'should render helpers properly',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(1, 'Has error', 'foo.js', 'error', MAP_RULE_PROPS);
 
@@ -251,7 +251,7 @@ describe(
 		it(
 			'should sort errors',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(3, 'Has error', 'foo.js');
 				logger.log([1, 5], 'Has error', 'foo.js');
@@ -269,7 +269,7 @@ describe(
 		it(
 			'should not add duplicate errors',
 			function() {
-				var logger = new Logger.Logger();
+				var logger = new Logger.constructor();
 
 				logger.log(3, 'Has error', 'foo.js');
 				logger.log(3, 'Has error', 'foo.js');
