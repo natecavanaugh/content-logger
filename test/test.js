@@ -157,28 +157,6 @@ describe(
 		);
 
 		it(
-			'allow a custom init',
-			function() {
-				var init = sandbox.spy();
-
-				var loggerExt = function() {
-					Logger.constructor.apply(this, arguments);
-				};
-
-				loggerExt.prototype = _.create(
-					Logger.constructor.prototype,
-					{
-						init: init
-					}
-				);
-
-				var logger = new loggerExt();
-
-				assert.isTrue(init.called);
-			}
-		);
-
-		it(
 			'should render helpers properly',
 			function() {
 				var logger = new Logger.constructor();
@@ -277,6 +255,69 @@ describe(
 				var errors = logger.getErrors('foo.js');
 
 				assert.equal(errors.length, 1);
+			}
+		);
+
+		it(
+			'should throw an error when called without arguments',
+			function() {
+				assert.throws(
+					Logger.constructor.create,
+					'You must pass an object to Logger.create'
+				);
+			}
+		);
+
+		it(
+			'should use a custom constructor',
+			function() {
+				var constructor = sandbox.spy();
+
+				var FooCustom1 = Logger.constructor.create(
+					{
+						constructor: constructor
+					}
+				);
+
+				new FooCustom1();
+
+				assert.isTrue(constructor.called);
+			}
+		);
+
+		it(
+			'should use a custom constructor',
+			function() {
+				var constructor = sandbox.spy();
+
+				var FooCustom1 = Logger.constructor.create(
+					{
+						constructor: constructor
+					}
+				);
+
+				new FooCustom1();
+
+				assert.isTrue(constructor.called);
+			}
+		);
+
+		it(
+			'allow a custom init',
+			function() {
+				var init = sandbox.spy();
+
+				var loggerExt = Logger.constructor.create(
+					{
+						prototype: {
+							init: init
+						}
+					}
+				);
+
+				var logger = new loggerExt();
+
+				assert.isTrue(init.called);
 			}
 		);
 	}

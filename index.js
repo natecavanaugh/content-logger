@@ -184,6 +184,47 @@ Logger.prototype = _.create(
 	}
 );
 
+Logger.create = function(obj) {
+	if (!_.isObject(obj)) {
+		throw Error('You must pass an object to Logger.create');
+	}
+
+	var constructor = Logger._getConstructor(obj);
+
+	var proto = Object.create(Logger.prototype);
+
+	var customProto = obj.prototype;
+
+	delete obj.prototype;
+
+	_.assign(proto, customProto);
+
+	proto.constructor = constructor;
+
+	constructor.prototype = proto;
+
+	_.assign(constructor, obj);
+
+	return constructor;
+};
+
+Logger._getConstructor = function(obj) {
+	var constructor;
+
+	if (obj.hasOwnProperty('constructor')) {
+		constructor = obj.constructor;
+
+		delete obj.constructor;
+	}
+	else {
+		constructor = function() {
+			return Logger.apply(this, arguments);
+		};
+	}
+
+	return constructor;
+};
+
 Object.defineProperty(
 	Logger.prototype,
 	'TPL',
