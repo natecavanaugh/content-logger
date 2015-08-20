@@ -21,7 +21,8 @@
   ],
   "dependencies": {
     "content-logger-handlebars-helpers": "0.0.1",
-    "drip": "^1.4.0"
+    "drip": "^1.4.0",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "mocha": "*",
