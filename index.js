@@ -1,13 +1,11 @@
 var _ = require('lodash');
-var Handlebars = require('handlebars');
+var Handlebars = require('content-logger-handlebars-helpers')();
 
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
 
-var EventEmitter = require('events').EventEmitter;
-
-var colors = require('cli-color-keywords')();
+var EventEmitter = require('drip').EnhancedEmitter;
 
 var getLineNumber = function(error) {
 	var line = error.line;
@@ -252,78 +250,6 @@ Object.defineProperty(
 
 			this.TPL = null;
 		}
-	}
-);
-
-Object.keys(colors.styles).forEach(
-	function(item, index) {
-		Handlebars.registerHelper(
-			item,
-			function(options) {
-				return colors[item](options.fn(this));
-			}
-		);
-	}
-);
-
-Handlebars.registerHelper(
-	'color',
-	function(options) {
-		var colorStyle = this.type;
-
-		if (!_.isFunction(colors[colorStyle])) {
-			colorStyle = 'warn';
-		}
-
-		return colors[colorStyle](options.fn(this));
-	}
-);
-
-Handlebars.registerHelper(
-	'line',
-	function(options) {
-		var line = this.line;
-		var text = 'Line';
-
-		if (Array.isArray(line)) {
-			line = line.join('-');
-			text = 'Lines';
-		}
-
-		if (this.column && options.data.root.showColumns) {
-			line += ', Column ' + this.column;
-		}
-
-		return text + ' ' + line;
-	}
-);
-
-Handlebars.registerHelper(
-	'and',
-	function(a, b, options) {
-		var retVal;
-
-		if (a && b) {
-			retVal = options.fn(this);
-		}
-		else {
-			retVal = options.inverse(this);
-		}
-
-		return retVal;
-	}
-);
-
-Handlebars.registerHelper(
-	'banner',
-	function(options) {
-		var content = options.fn(this);
-
-		if (!this.showBanner) {
-			content = '';
-		}
-
-		return content;
 	}
 );
 

@@ -20,7 +20,8 @@
     ""
   ],
   "dependencies": {
-    "cli-color-keywords": "^0.0.1"
+    "content-logger-handlebars-helpers": "0.0.1",
+    "drip": "^1.4.0"
   },
   "devDependencies": {
     "mocha": "*",
