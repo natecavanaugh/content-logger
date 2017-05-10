@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var Handlebars = require('content-logger-handlebars-helpers')();
 
@@ -35,26 +37,22 @@ var sortErrors = function(a, b) {
 
 var REGEX_NON_SPACE = /\S/;
 
-var Logger = function() {
-	EventEmitter.call(this);
+class Logger extends EventEmitter {
+	constructor() {
+		super();
 
-	this.TPL_PATH = path.join(__dirname, 'tpl/cli.tpl');
+		this.TPL_PATH = path.join(__dirname, 'tpl/cli.tpl');
 
-	this.fileErrors = {};
+		this.fileErrors = {};
 
-	this.verboseDetails = {};
+		this.verboseDetails = {};
 
-	if (_.isFunction(this.init)) {
-		this.init();
+		if (_.isFunction(this.init)) {
+			this.init();
+		}
 	}
-};
 
-Logger.prototype = _.create(
-	EventEmitter.prototype,
-	{
-		constructor: Logger,
-
-		getErrors: function(file) {
+	getErrors(file) {
 			var fileErrors;
 
 			if (_.isUndefined(file)) {
@@ -73,9 +71,9 @@ Logger.prototype = _.create(
 			}
 
 			return fileErrors;
-		},
+		}
 
-		log: function(line, msg, file, type, props) {
+		log(line, msg, file, type, props) {
 			var errors = this.getErrors(file);
 
 			var errorMap = errors.errorMap;
@@ -98,9 +96,9 @@ Logger.prototype = _.create(
 
 				this.emit('add', error);
 			}
-		},
+		}
 
-		render: function(file, config) {
+		render(file, config) {
 			config = config || {};
 
 			var logTpl = this._getTPL();
@@ -126,9 +124,9 @@ Logger.prototype = _.create(
 			this.emit('render', errors);
 
 			return out;
-		},
+		}
 
-		renderFileNames: function(file, config) {
+		renderFileNames(file, config) {
 			config = config || {};
 
 			var errors = this.getErrors(file);
@@ -142,9 +140,9 @@ Logger.prototype = _.create(
 			}
 
 			return out;
-		},
+		}
 
-		_getFilePath: function(file, config) {
+		_getFilePath(file, config) {
 			var relative = config.relative;
 
 			if (relative) {
@@ -152,9 +150,9 @@ Logger.prototype = _.create(
 			}
 
 			return file;
-		},
+		}
 
-		_getTPL: function() {
+		_getTPL() {
 			var tplFn = this.TPL_FN;
 
 			if (!tplFn) {
@@ -166,9 +164,9 @@ Logger.prototype = _.create(
 			}
 
 			return tplFn;
-		},
+		}
 
-		_getTPLContent: function() {
+		_getTPLContent() {
 			var tpl = this.TPL;
 
 			if (!tpl) {
@@ -179,8 +177,7 @@ Logger.prototype = _.create(
 
 			return tpl;
 		}
-	}
-);
+}
 
 Logger.create = function(obj) {
 	if (!_.isObject(obj)) {
@@ -199,7 +196,7 @@ Logger.create = function(obj) {
 
 	proto.constructor = constructor;
 
-	constructor.prototype = proto;
+	_.assign(constructor.prototype, proto);
 
 	_.assign(constructor, obj);
 
@@ -215,8 +212,7 @@ Logger._getConstructor = function(obj) {
 		delete obj.constructor;
 	}
 	else {
-		constructor = function() {
-			return Logger.apply(this, arguments);
+		constructor = class extends Logger {
 		};
 	}
 
