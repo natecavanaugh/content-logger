@@ -105,20 +105,24 @@ class Logger extends EventEmitter {
 
 			var errors = this.getErrors(file);
 
-			errors.sort(sortErrors);
+			var out = '';
 
-			var tplContext = {
-				errors: errors,
-				file: this._getFilePath(file, config),
-				showBanner: errors.length || !config.showBanner,
-				showColumns: config.showColumns,
-				showLintIds: config.showLintIds
-			};
-
-			var out = logTpl(tplContext);
-
-			if (!REGEX_NON_SPACE.test(out)) {
-				out = '';
+			if (errors.length > 0) {
+				errors.sort(sortErrors);
+	
+				var tplContext = {
+					errors: errors,
+					file: this._getFilePath(file, config),
+					showBanner: errors.length || !config.showBanner,
+					showColumns: config.showColumns,
+					showLintIds: config.showLintIds
+				};
+	
+				var out = logTpl(tplContext);
+	
+				if (!REGEX_NON_SPACE.test(out)) {
+					out = '';
+				}
 			}
 
 			this.emit('render', errors);
