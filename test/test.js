@@ -101,7 +101,7 @@ describe(
 
 				out = logger.render('noop.js');
 
-				assert.equal(out, 'File:noop.js\nNo errors\n');
+				assert.equal(out, '');
 
 				out = logger.render(
 					'noop.js',
