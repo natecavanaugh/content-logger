@@ -25,18 +25,18 @@
     "lodash": "^4.17.5"
   },
   "devDependencies": {
-    "mocha": "*",
     "chai": "*",
     "chai-string": "*",
     "coveralls": "*",
+    "gulp": "^3.9.1",
     "gulp-coveralls": "*",
-    "gulp-istanbul": "*",
-    "istanbul": "*",
-    "sinon": "*",
-    "gulp": "*",
-    "gulp-load-plugins": "*",
     "gulp-help": "*",
+    "gulp-istanbul": "*",
+    "gulp-load-plugins": "*",
+    "gulp-mocha": "*",
+    "istanbul": "*",
+    "mocha": "*",
     "run-sequence": "*",
-    "gulp-mocha": "*"
+    "sinon": "^4.5.0"
   }
 }
